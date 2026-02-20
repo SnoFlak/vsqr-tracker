@@ -17,14 +17,7 @@ export async function GET(
     .single()
 
     const userAgent = request.headers.get('user-agent') || 'Unknown'
-    const ip = request.headers.get('x-forwarded-for') || '0.0.0.0'
-    let location = "";
-
-    fetch(`http://ip-api.com/json/${ip}`)
-    .then(response => response.json())
-    .then(data => {
-        location = data.city;
-    });
+    const ip = (request.headers.get('x-forwarded-for') || '0.0.0.0').split(',')[0].trim()
 
   // 2. If it doesn't exist, send them to your main site or a custom 404
   if (error || !code) {
@@ -32,16 +25,17 @@ export async function GET(
     return NextResponse.redirect(new URL('/', request.url))
   }
 
-  // 3. Log the scan (The "Fire and Forget" method)
-  // This happens in the background so the user doesn't wait
-  supabase
-    .from('Scans')
-    .insert({
-      code_id: code?.id,
-      agent: request.headers.get('user-agent') || 'unknown',
-      location: location,
-    })
-    .then()
+    fetch(`http://ip-api.com/json/${ip}`)
+    .then(response => response.json())
+    .then(data => {
+         supabase
+            .from('Scans')
+            .insert({
+            code_id: code?.id,
+            agent: request.headers.get('user-agent') || 'unknown',
+            location: data.city,
+            })
+    });
 
   // 4. THE REDIRECT
   return NextResponse.redirect(code?.destination)
