@@ -25,17 +25,20 @@ export async function GET(
     return NextResponse.redirect(new URL('/', request.url))
   }
 
+// 1. Start the IP lookup
     fetch(`http://ip-api.com/json/${ip}`)
-    .then(response => response.json())
-    .then(data => {
-         supabase
-            .from('Scans')
-            .insert({
+    .then(res => res.json())
+    .then(ipData => {
+    // 2. NOW insert into Supabase once we actually have the location
+        return supabase
+        .from('Scans')
+        .insert({
             code_id: code?.id,
-            agent: request.headers.get('user-agent') || 'unknown',
-            location: data.city,
-            })
-    });
+            agent: userAgent,
+            location: ipData.city || "Unknown", // Use the data from the fetch
+        })
+  })
+  .catch(err => console.error("Logging failed:", err))
 
   // 4. THE REDIRECT
   return NextResponse.redirect(code?.destination)
