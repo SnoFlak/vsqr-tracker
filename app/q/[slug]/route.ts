@@ -3,10 +3,10 @@ import { NextRequest, NextResponse } from 'next/server'
 
 export async function GET(
   request: NextRequest,
-  { params }: { params: { slug: string } }
+  { params }: { params: Promise<{ slug: string }> }
 ) {
   // Await the params in Next.js 15+
-  const slug = (await params).slug 
+  const { slug } = await params; 
   const supabase = await createClient()
 
   // 1. Check if the link exists
