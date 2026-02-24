@@ -8,12 +8,11 @@ export async function updateCode(id: string, formData: FormData) {
   const supabase = await createClient()
   
   const updates = {
-    slug: formData.get('slug') as string,
-    destination_url: formData.get('destination_url') as string,
+    destination: formData.get('destination_url') as string,
   }
 
   const { error } = await supabase
-    .from('links')
+    .from('Codes')
     .update(updates)
     .eq('id', id)
 

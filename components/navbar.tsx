@@ -13,7 +13,7 @@ export default function Navbar() {
   const navItems = [
     { name: 'Dashboard', href: '/dashboard', icon: QrCode },
     { name: 'Analytics', href: '/analytics', icon: BarChart2 },
-    { name: 'Settings', href: '/settings', icon: Settings },
+    // { name: 'Settings', href: '/settings', icon: Settings },
   ];
 
   return (
@@ -26,7 +26,7 @@ export default function Navbar() {
               <div className="bg-blue-600 p-1.5 rounded-lg">
                 <QrCode size={20} className="text-white" />
               </div>
-              <span className="tracking-tight text-gray-900">QRStack</span>
+              <span className="tracking-tight text-gray-900">QRCodeSpoken</span>
             </Link>
 
             {/* Desktop Menu */}

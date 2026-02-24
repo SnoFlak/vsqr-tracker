@@ -21,10 +21,9 @@ export default function EditForm({ code }: { code: any }) {
           </span>
           <input
             name="slug"
-            defaultValue={code.slug}
             className={`${inputStyles} rounded-l-none`}
-            placeholder="merch-store"
-            required
+            placeholder={code.slug}
+            disabled
           />
         </div>
         <p className="mt-2 text-xs text-gray-400">This is the short path your QR code will point to.</p>
@@ -35,9 +34,9 @@ export default function EditForm({ code }: { code: any }) {
         <input
           name="destination_url"
           type="url"
-          defaultValue={code.destination_url}
+          defaultValue={code.destination}
           className={inputStyles}
-          placeholder="https://spotify.com/artist/..."
+          placeholder={code.destination}
           required
         />
         <p className="mt-2 text-xs text-gray-400">Where fans will land after scanning.</p>
