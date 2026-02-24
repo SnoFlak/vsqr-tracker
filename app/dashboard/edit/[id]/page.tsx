@@ -43,7 +43,7 @@ export default async function EditCodePage({ params }: { params: Promise<{ id: s
             </div>
             
             <a 
-              href={publicUrl} 
+              href={`${publicUrl}?download=${code.id}.png`} 
               download={`qr-${code.slug}.png`}
               className="w-full flex items-center justify-center gap-2 bg-gray-900 hover:bg-black text-white px-4 py-2 rounded-lg font-medium transition-all"
             >
