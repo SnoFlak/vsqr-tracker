@@ -21,3 +21,23 @@ export async function updateCode(id: string, formData: FormData) {
   revalidatePath('/dashboard')
   redirect('/dashboard')
 }
+
+export async function deleteCode(id: string) {
+  const supabase = await createClient()
+
+  // 1. Delete the database record (Scans will cascade delete)
+  const { error: dbError } = await supabase
+    .from('Codes')
+    .delete()
+    .eq('id', id)
+
+  if (dbError) throw new Error("Failed to delete record")
+
+  // 2. Delete the QR code image from Storage
+  await supabase.storage
+    .from('qrcodes')
+    .remove([`${id}.png`])
+
+  revalidatePath('/dashboard')
+  redirect('/dashboard')
+}

@@ -2,9 +2,10 @@
 
 import { updateCode } from './actions'
 import { useState } from 'react'
-import { Save, Loader2 } from 'lucide-react'
+import { Save, Loader2, Delete } from 'lucide-react'
+import DeleteButton from './delete-button'
 
-export default function EditForm({ code }: { code: any }) {
+export default function EditForm({ code, codeid }: { code: any, codeid: any }) {
   const [loading, setLoading] = useState(false)
   const updateWithId = updateCode.bind(null, code.id)
 
@@ -44,6 +45,7 @@ export default function EditForm({ code }: { code: any }) {
 
       <div className="pt-4 flex items-center justify-between gap-4 border-t border-gray-100 mt-6">
         <p className="text-xs text-gray-400 italic">ID: {code.id}</p>
+        <DeleteButton id={codeid} />
         <button
           type="submit"
           disabled={loading}

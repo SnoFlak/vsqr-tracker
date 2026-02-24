@@ -25,7 +25,7 @@ export default async function EditCodePage({ params }: { params: Promise<{ id: s
         <div className="md:col-span-2 space-y-6">
            <h1 className="text-2xl font-bold text-gray-900">Edit QR Code</h1>
            <div className="bg-white p-6 rounded-xl border border-gray-200 shadow-sm">
-             <EditForm code={code} />
+             <EditForm code={code} codeid={id}/>
            </div>
         </div>
 
