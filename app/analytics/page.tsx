@@ -38,6 +38,8 @@ export default async function AnalyticsPage({
     return acc
   }, {})
 
+  console.log(scans)
+
   const sortedLinks = Object.entries(topLinks || {})
     .sort(([, a]: any, [, b]: any) => b - a)
     .slice(0, 5)
@@ -58,12 +60,12 @@ export default async function AnalyticsPage({
             </Link>
             <h1 className="text-2xl font-bold text-gray-900 flex items-center gap-2">
               <BarChart3 className="text-blue-600" size={28} />
-              {id ? `Stats for /${scans?.[0]?.Codes?.slug}` : 'Global Analytics'}
+              Global Analytics
             </h1>
           </div>
 
           {/* Client-side Filter Component */}
-          <AnalyticsFilter allCodes={allCodes || []} currentId={id || ""} />
+          {/* <AnalyticsFilter allCodes={allCodes || []} currentId={id || ""} /> */}
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
@@ -104,14 +106,6 @@ export default async function AnalyticsPage({
               </div>
             </div>
 
-            {/* Quick Tip Card */}
-            <div className="bg-blue-600 rounded-xl p-6 text-white shadow-blue-200 shadow-lg">
-              <MousePointer2 className="mb-3 opacity-80" size={24} />
-              <h4 className="font-bold mb-1">Engagement Tip</h4>
-              <p className="text-blue-100 text-sm leading-relaxed">
-                Links with shorter slugs generally see a 15% higher scan rate on printed merch.
-              </p>
-            </div>
           </div>
 
         </div>
