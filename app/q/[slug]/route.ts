@@ -34,7 +34,7 @@ export async function GET(
       code_id: code?.id,
       agent: userAgent,
       // Optional: Store timezone as a proxy for location without an API call
-      location: Intl.DateTimeFormat().resolvedOptions().timeZone || "Unknown"
+      location: "Unknown"
     })
     if (error) console.error("Logging failed:", error);
   } else {
