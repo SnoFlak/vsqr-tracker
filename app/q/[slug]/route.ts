@@ -27,20 +27,16 @@ export async function GET(
   }
 
   if(!isBot){
-    // Start the IP lookup
-    fetch(`http://ip-api.com/json/${ip}`)
-    .then(res => res.json())
-    .then(ipData => {
-    // NOW insert into Supabase once we actually have the location
-        return supabase
-        .from('Scans')
-        .insert({
-            code_id: code?.id,
-            agent: userAgent,
-            location: ipData.city || "Unknown", // Use the data from the fetch
-        })
+    // Direct insert - no external fetch to fail or rate-limit
+    const { error } = await supabase
+    .from('Scans')
+    .insert({
+      code_id: code?.id,
+      agent: userAgent,
+      // Optional: Store timezone as a proxy for location without an API call
+      location: Intl.DateTimeFormat().resolvedOptions().timeZone || "Unknown"
     })
-    .catch(err => console.error("Logging failed:", err))
+    if (error) console.error("Logging failed:", error);
   } else {
     console.log("Bot tried to hit link");
   }
