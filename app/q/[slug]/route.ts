@@ -18,6 +18,12 @@ export async function GET(
 
     const userAgent = request.headers.get('user-agent') || 'Unknown'
     const isBot = /bot|spider|crawler|preview|facebookexternalhit|whatsapp|slurp|t-mobile|vzw/i.test(userAgent);
+    // Next.js (Pages or App Router)
+    const isPrefetch = 
+      request.headers.get('purpose') === 'prefetch' || 
+      request.headers.get('x-purpose') === 'prefetch' ||
+      request.headers.get('x-moz-prefecth') === 'prefetch';
+
     const ip = (request.headers.get('x-forwarded-for') || '0.0.0.0').split(',')[0].trim()
 
   // If it doesn't exist, send them to your main site or a custom 404
@@ -26,7 +32,7 @@ export async function GET(
     return NextResponse.redirect(new URL('/', request.url))
   }
 
-  if(!isBot){
+  if(!isBot && !isPrefetch){
     // Direct insert - no external fetch to fail or rate-limit
     const { error } = await supabase
     .from('Scans')
