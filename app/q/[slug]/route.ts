@@ -41,6 +41,8 @@ export async function GET(
         })
     })
     .catch(err => console.error("Logging failed:", err))
+  } else {
+    console.log("Bot tried to hit link");
   }
 
   return NextResponse.redirect(code?.destination)
